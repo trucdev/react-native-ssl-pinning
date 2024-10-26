@@ -1,7 +1,8 @@
 
-# react-native-ssl-pinning
+# @trucdev/react-native-ssl-pinning
 
 React-Native ssl pinning & public key pinning using OkHttp 3 in Android, and AFNetworking on iOS. 
+Base on react-native-ssl-pinning and add disableHostnameVerifier option
 
 ## NOTES:
 

@@ -1,5 +1,5 @@
 {
-  "name": "react-native-ssl-pinning",
+  "name": "@trucdev/react-native-ssl-pinning",
   "version": "1.5.8",
   "description": "React-Native Ssl pinning using OkHttp 3 in Android, and AFNetworking on iOS.",
   "main": "index.js",
@@ -10,17 +10,17 @@
     "react-native"
   ],
   "types": "./index.d.ts",
-  "author": "Max Toyberman",
+  "author": "Max Toyberman and trucdev",
   "dependencies": {
     "q": "^1.4.1"
   },
   "license": "MIT",
-  "homepage": "https://github.com/MaxToyberman/react-native-ssl-pinning#README",
+  "homepage": "https://github.com/trucdev/react-native-ssl-pinning#README",
   "peerDependencies": {
     "react-native": "*"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MaxToyberman/react-native-ssl-pinning.git"
+    "url": "git+https://github.com/trucdev/react-native-ssl-pinning.git"
   }
 }

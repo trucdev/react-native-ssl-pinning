@@ -47,6 +47,7 @@ public class OkHttpUtils {
     private static final String HEADERS_KEY = "headers";
     private static final String BODY_KEY = "body";
     private static final String METHOD_KEY = "method";
+    private static final String DISABLE_HOSTNAME_VERIFIER = "disableHostnameVerifier";
     private static final String FILE = "file";
     private static final HashMap<String, OkHttpClient> clientsByDomain = new HashMap<>();
     private static OkHttpClient defaultClient = null;
@@ -76,6 +77,10 @@ public class OkHttpUtils {
                 X509TrustManager manager = initSSLPinning(certs);
                 clientBuilder
                         .sslSocketFactory(sslContext.getSocketFactory(), manager);
+                if (options.hasKey(DISABLE_HOSTNAME_VERIFIER) && options.getBoolean(DISABLE_HOSTNAME_VERIFIER)) {
+                    clientBuilder
+                        .hostnameVerifier((hostnameInVerifier, session) -> true);
+                }
             }
 
 

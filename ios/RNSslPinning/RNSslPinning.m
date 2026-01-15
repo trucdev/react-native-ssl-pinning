@@ -215,6 +215,7 @@ RCT_EXPORT_METHOD(fetch:(NSString *)url obj:(NSDictionary *)obj callback:(RCTRes
     AFSecurityPolicy *policy;
     BOOL pkPinning = [[obj objectForKey:@"pkPinning"] boolValue];
     BOOL disableAllSecurity = [[obj objectForKey:@"disableAllSecurity"] boolValue];
+    BOOL disableHostnameVerifier = [[obj objectForKey:@"disableHostnameVerifier"] boolValue];
     
     NSSet *certificates = [AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]];
     
@@ -229,6 +230,10 @@ RCT_EXPORT_METHOD(fetch:(NSString *)url obj:(NSDictionary *)obj callback:(RCTRes
     }
     else{
         policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate withPinnedCertificates:certificates];
+    }
+    
+    if (disableHostnameVerifier) {
+        policy.validatesDomainName = NO;
     }
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];

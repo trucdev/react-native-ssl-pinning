@@ -167,7 +167,10 @@ public class RNSslPinningModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void fetch(String hostname, final ReadableMap options, final Callback callback) {
-
+        if (reactContext.hasActiveCatalystInstance() == false) {
+            callback.invoke("React context is not active", null);
+            return;
+        }
         final WritableMap response = Arguments.createMap();
         String domainName;
         try {

@@ -118,8 +118,19 @@ public class RNSslPinningModule extends ReactContextBaseJavaModule {
     }
 
     public static String getDomainName(String url) throws URISyntaxException {
+        if (url == null) {
+            return null;
+        }
         URI uri = new URI(url);
         String domain = uri.getHost();
+        if (domain == null) {
+            // Handle hosts without an explicit scheme (e.g. "example.com")
+            URI uriWithScheme = new URI("https://" + url);
+            domain = uriWithScheme.getHost();
+        }
+        if (domain == null) {
+            return null;
+        }
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
@@ -129,7 +140,11 @@ public class RNSslPinningModule extends ReactContextBaseJavaModule {
         try {
             WritableMap map = new WritableNativeMap();
 
-            List<Cookie> cookies = cookieStore.get(getDomainName(domain));
+            String domainName = getDomainName(domain);
+            if (domainName == null) {
+                domainName = domain;
+            }
+            List<Cookie> cookies = cookieStore.get(domainName);
 
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
@@ -176,6 +191,9 @@ public class RNSslPinningModule extends ReactContextBaseJavaModule {
         try {
             domainName = getDomainName(hostname);
         } catch (URISyntaxException e) {
+            domainName = hostname;
+        }
+        if (domainName == null) {
             domainName = hostname;
         }
         if (options.hasKey(DISABLE_ALL_SECURITY) && options.getBoolean(DISABLE_ALL_SECURITY)) {
